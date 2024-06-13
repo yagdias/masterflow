@@ -36,18 +36,14 @@ prefix = args.prefix
 outdir = args.outdir
 remove_tmp = args.removetmp
 
-if prefix == None:
-    prefix = re.sub("_.*", "", reads1)
-
 # Run Quality Control #
 if __name__ == '__main__':
-    
-    if prefix is None:
-            prefix = reads1
-            prefix = re.sub("\..*", "", prefix)
-            prefix = re.sub(".*/", "", prefix).rstrip("\n")
-            prefix = re.sub(".*/", "", prefix).rstrip("\n")
 
+    print(f"prefix name is {prefix}")    
+    if prefix is None:
+            prefix = reads1   
+            prefix = re.sub(".*/", "", prefix) 
+            prefix = re.sub("_1.*", "", prefix).rstrip("\n")
 
     outdir = check_outdir(outdir)
 # Quality control
@@ -58,8 +54,8 @@ if __name__ == '__main__':
     aligner = Aligner(reference, f"{outdir}/{prefix}_1.fastq.gz.fastp", f"{outdir}/{prefix}_1.fastq.gz.fastp", threads, outdir)
     aligner.run_build_index()
     aligner.run_alignment()
-    os.rename(f"{outdir}/un-conc-mate.1", f"{outdir}{prefix}_1.fastq.gz.fastp.bowtie")
-    os.rename(f"{outdir}/un-conc-mate.2", f"{outdir}{prefix}_2.fastq.gz.fastp.bowtie")
+    os.rename(f"{outdir}/un-conc-mate.1", f"{outdir}/{prefix}_1.fastq.gz.fastp.bowtie")
+    os.rename(f"{outdir}/un-conc-mate.2", f"{outdir}/{prefix}_2.fastq.gz.fastp.bowtie")
 
 # Assembly
     assembler = Assembler(f"{outdir}/{prefix}_2.fastq.gz.fastp.bowtie", f"{outdir}/{prefix}_2.fastq.gz.fastp.bowtie", threads, outdir)
