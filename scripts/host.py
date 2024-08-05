@@ -3,12 +3,15 @@ import shlex
 
 
 
-def build_index(reference, threads):
-    cline = f"bowtie2-build -f {reference} {reference} --threads {threads}"
-    cline = shlex.split(cline)
-    cmd_cline = subprocess.Popen(cline)
-    cmd_cline.wait()
-    print("#############Index built successfully.")
+def build_index(reference, threads, build_index):
+    if build_index == True:    
+        cline = f"bowtie2-build -f {reference} {reference} --threads {threads}"
+        cline = shlex.split(cline)
+        cmd_cline = subprocess.Popen(cline)
+        cmd_cline.wait()
+        print("#############Index built successfully.")
+    else:
+        print("index not build, already provided")
     host_id = reference.split("/")[-1].split(".fa")[0]
     host_dir = reference
     host_index = reference.split("/")[-1]

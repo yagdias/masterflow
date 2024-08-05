@@ -17,6 +17,7 @@ parser.add_argument("-r", "--reads_dir", help="reads directory must be with _R1.
 parser.add_argument("-p", "--threads", help="threads to be used in analisys", required=False, default=1)
 parser.add_argument("-q", "--quality_threshold", help="phred quality threshhold for fastp", required=False, default=30)
 parser.add_argument("-rg", "--reference_genome", help="Reference genome for Bowtie2", required=True)
+parser.add_argument("-bi", "--build_index", help="Build index, default=true", default=True, choices=['True', 'False'])
 parser.add_argument("-pr", "--prefix", help="Write the prefix name for output files", required=False)
 parser.add_argument("-o","--outdir", help="Output directory", required=False, default="output")
 parser.add_argument("-rm", "--removetmp", help="Remove temporary files generated through analysis? default = True.", default=True, choices=['True', 'False'])
@@ -27,6 +28,7 @@ reads_dir = args.reads_dir
 threads = args.threads
 quality_threshold = args.quality_threshold
 reference = args.reference_genome
+build_index = args.build_index
 prefix = args.prefix
 outdir = args.outdir
 remove_tmp = args.removetmp
@@ -44,7 +46,7 @@ if __name__ == '__main__':
     print("############# QUALITY CONTROL DONE #############")
 
 # # Alignment step
-    host_index = scripts.host.build_index(reference, threads)
+    host_index = scripts.host.build_index(reference, threads, build_index)
     host = scripts.host.create_host(host_index)
 
     print("############# INDEX DONE #############")
