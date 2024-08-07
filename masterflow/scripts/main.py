@@ -5,9 +5,9 @@
 ######IMPORT_MODULES######
 
 import argparse
-from scripts.pipelinefunctions import PipelineFunctions
-import scripts.sample
-import scripts.host
+from masterflow.pipelinefunctions import PipelineFunctions
+import masterflow.sample
+import masterflow.host
 
 
 ########ARGUMENTS#######
@@ -35,10 +35,11 @@ remove_tmp = args.removetmp
 
 ########MAIN#######
 # Run Quality Control #
-if __name__ == '__main__':
+
+def main():
     outdir = PipelineFunctions.check_outdir(outdir)
-    sample_dict = scripts.sample.sampleloader(reads_dir)
-    sample_list = scripts.sample.createsample(sample_dict)
+    sample_dict = masterflow.sample.sampleloader(reads_dir)
+    sample_list = masterflow.sample.createsample(sample_dict)
 
     for sample in sample_list:
         PipelineFunctions.fastp(sample.r1, sample.r2, quality_threshold, sample.id, outdir)
@@ -46,8 +47,8 @@ if __name__ == '__main__':
     print("############# QUALITY CONTROL DONE #############")
 
 # # Alignment step
-    host_index = scripts.host.build_index(reference, threads, build_index)
-    host = scripts.host.create_host(host_index)
+    host_index = masterflow.host.build_index(reference, threads, build_index)
+    host = masterflow.host.create_host(host_index)
 
     print("############# INDEX DONE #############")
 
