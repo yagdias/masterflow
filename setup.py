@@ -10,7 +10,7 @@ setup(
     include_package_data=True,
     entry_points={
         "console_scripts": [
-            "masterflow = masterflow.scripts.main:main",
+            "masterflow = scripts.masterflow.main:main",
         ],
     },
 )
